@@ -1,12 +1,12 @@
 const User = require("../models/User");
 
-const deleteUser = (id) => {
+const deleteUser = (id) => {//delete user
   return new Promise((resolve, reject) => {
-    User.findByIdAndDelete(id).then((response) => {
+    User.findByIdAndDelete(id).then((response) => {//find user and delete by id
       if (response != null) {
-        resolve({ status: true, message: "User deleted " });
+        resolve({ status: true, message: "User deleted " });//if user deleted
       } else {
-        reject({ status: false, message: "user not found" });
+        reject({ status: false, message: "user not found" });//if user not found
       }
     });
   });
