@@ -9,12 +9,17 @@ const register = ({ username, email, password }) => {
           username,
           email,
           password: hash,
+          method: "email&password",
         });
         try {
           const savedUser = await newUser.save();
           resolve(savedUser);
         } catch (err) {
-          reject(err);
+          if (err.code == 11000) {
+            reject({ status: false, message: "user already logged in" });
+          } else {
+            reject(err);
+          }
         }
       });
   });

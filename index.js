@@ -5,6 +5,7 @@ const mongoose = require("mongoose");
 dotEnv.config({ path: "./.env" });
 const authRouter = require("./src/routes/Auth");
 const userRouter = require("./src/routes/User");
+const cors = require("cors")
 mongoose
   .connect(process.env.mogoUrl)
   .then(() => {
@@ -13,6 +14,7 @@ mongoose
   .catch((err) => {
     console.log(err);
   });
+app.use(cors())
 app.use(express.json());
 app.use("/authentication", authRouter);
 app.use("/user", userRouter);
