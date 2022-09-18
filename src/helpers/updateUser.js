@@ -1,22 +1,19 @@
 const User = require("../models/User");
 
-const updateUser = (userId, user) => {
+const updateUser = (userId, user) => {//update user
   return new Promise((resolve, reject) => {
-    User.findByIdAndUpdate(
+    User.findByIdAndUpdate(//find user by id
       userId,
       {
-        $set: user,
+        $set: user,//set user details
       },
-      { new: true }
+      { new: true }//return new user details true
     )
       .then((user) => {
-        resolve(user);
+        resolve(user);//resolve new user details
       })
       .catch(() => {
-        return new Error({
-          status: false,
-          message: "user not updated",
-        });
+        reject({ status: false, message: "user not updated", });//reject error message
       });
   });
 };

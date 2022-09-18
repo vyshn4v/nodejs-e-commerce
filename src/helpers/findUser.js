@@ -7,7 +7,7 @@ const finduser = (id) => {//find user by id
         resolve(response);//resolve user details
       })
       .catch((err) => {
-        reject(err);//reject err
+        reject(err);//reject error message
       });
   });
 };

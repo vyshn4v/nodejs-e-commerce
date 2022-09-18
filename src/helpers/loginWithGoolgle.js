@@ -31,7 +31,7 @@ const loginWithGoogle = ({ token }) => {//login with google function
                 reject({ status: false, message: "user not found" })//reject error message
             }
         } catch (err) {
-            reject(err)//if user not found reject error message
+            reject({ status: false, err: err.message.split(',')[0] })//if user not found reject error message
         }
     })
 }

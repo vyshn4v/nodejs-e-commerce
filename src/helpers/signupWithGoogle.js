@@ -1,7 +1,7 @@
 const { OAuth2Client } = require("google-auth-library")
 const User = require("../models/User")
 const client = new OAuth2Client(process.env.clientID)
-const jwt=require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 const signupWithGoogle = ({ token }) => {
     return new Promise(async (resolve, reject) => {
         try {
@@ -21,14 +21,20 @@ const signupWithGoogle = ({ token }) => {
                     email,
                     method: "google"
                 }).save()//save user
-                const acessToken=jwt.sign({
-                    id:newUser._id,
-                    
-                })
-                resolve({status:true,user:{...newUser,acessToken}})//resolve new user
+                const acessToken = jwt.sign(
+                    {
+                        id: newUser._id,
+                        isAdmin: newUser.isAdmin
+                    },
+                    process.env.jwtSecretKey,//jwt secret key
+                    {
+                        expiresIn: "3d"
+                    }
+                )
+                resolve({ status: true, user: { ...newUser, acessToken } })//resolve new user and access token
             }
-        } catch (err) {
-            reject({ status: false, message: "Token expired" })
+        } catch (err) {//if err 
+            reject({ status: false, message: "Token expired" })//reject error message
         }
     })
 }

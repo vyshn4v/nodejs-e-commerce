@@ -4,24 +4,24 @@ const findUsers = require("../helpers/findUsers");
 const updateUser = require("../helpers/updateUser");
 const {
   verifyToken,
-  verifyTokenAndAutherization,
+  verifyTokenAndAutherisation,
   verifyTokenAndAdmin,
 } = require("../middleware/verifyToken");
 
 const router = require("express").Router();
 
-router.put("/update/:id", verifyTokenAndAutherization, async (req, res) => {
-  const { _id, ...others } = req.body;
+router.put("/update/:id", verifyTokenAndAutherisation, async (req, res) => {//update user 
+  const { _id, ...others } = req.body;//destructure id and group others
   updateUser(req.params.id, others)
     .then((updatedUser) => {
-      res.status(200).json(updatedUser);
+      res.status(200).json(updatedUser);//send success response
     })
     .catch((err) => {
-      res.status(500).json(err);
+      res.status(500).json(err);//send error response
     });
 });
 
-router.delete("/delete/:id", verifyTokenAndAutherization, (req, res) => {
+router.delete("/delete/:id", verifyTokenAndAutherisation, (req, res) => {//delete user
   deleteUser(req.params.id)
     .then((response) => {
       res.status(200).json(response);
@@ -31,7 +31,7 @@ router.delete("/delete/:id", verifyTokenAndAutherization, (req, res) => {
     });
 });
 
-router.get("/finduser/:id", verifyTokenAndAdmin, (req, res) => {
+router.get("/finduser/:id", verifyTokenAndAdmin, (req, res) => {//find user by id
   finduser(req.params.id)
     .then((user) => {
       res.status(200).json(user);
@@ -40,7 +40,8 @@ router.get("/finduser/:id", verifyTokenAndAdmin, (req, res) => {
       res.status(500).json(err);
     });
 });
-router.get("/users", verifyTokenAndAdmin, (req, res) => {
+
+router.get("/users", verifyTokenAndAdmin, (req, res) => {//all users details
   findUsers()
     .then((user) => {
       res.status(200).json(user);
